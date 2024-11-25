@@ -1,4 +1,5 @@
 import { User } from '@/contexts/Auth/AuthContext';
+import { RoleEnum } from '../graphql/generated/graphql-types';
 
 type UserPermission = Partial<User> & {
   permissions?: string[];
@@ -7,7 +8,7 @@ type UserPermission = Partial<User> & {
 type ValidateUserPermissionsParams = {
   user: UserPermission;
   permissions?: string[];
-  roles?: string[];
+  roles?: RoleEnum[];
 };
 
 export function validateUserPermissions({
@@ -27,6 +28,7 @@ export function validateUserPermissions({
     const hasRole = roles.some(role => {
       return user.role === role;
     });
+
     if (!hasRole) return false;
   }
 

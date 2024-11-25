@@ -1,0 +1,5 @@
+mutation DeleteSkill($deleteSkillId: String!) {
+  deleteSkill(id: $deleteSkillId) {
+    id
+  }
+}

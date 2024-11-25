@@ -1,7 +1,8 @@
-import mark from './logos/mark.png';
+import logo from './logos/logo.png';
+import logoSVG from './logos/logo.svg';
 
 const images = {
-  logos: { mark },
+  logos: { logo, logoSVG },
 };
 
 export default images;

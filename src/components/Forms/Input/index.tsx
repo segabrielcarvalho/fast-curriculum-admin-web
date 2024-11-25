@@ -31,7 +31,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       {label && (
         <label
           htmlFor={name}
-          className={`absolute -top-2 left-2 inline-block bg-white px-1 text-xs ${fontWeightLabel} ${colorLabel}`}
+          className="block text-sm/6 font-medium text-gray-900"
         >
           {label} {isRequired && <span className="text-red-500">*</span>}
         </label>
@@ -48,7 +48,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           ref={ref}
           aria-required={isRequired}
           required={isRequired}
-          className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary-default sm:text-sm sm:leading-6 ${
+          className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-default sm:text-sm sm:leading-6 ${
             inputLeftAddons ? 'rounded-l-none' : ''
           } ${inputRightAddons ? 'rounded-r-none' : ''}`}
           {...rest}

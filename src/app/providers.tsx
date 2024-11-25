@@ -9,7 +9,7 @@ const Providers = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <ApolloWrapper>
       <AuthProvider>
-        <ToastContainer />
+        <ToastContainer className="animate__animated animate__fadeIn p-0 w-full max-w-sm" />
         {children}
       </AuthProvider>
     </ApolloWrapper>

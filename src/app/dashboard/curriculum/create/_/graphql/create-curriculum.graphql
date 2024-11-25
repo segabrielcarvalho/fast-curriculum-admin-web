@@ -1,0 +1,3 @@
+mutation CreateCurriculum($data: CreateCurriculumInput!) {
+  createCurriculum(data: $data)
+}

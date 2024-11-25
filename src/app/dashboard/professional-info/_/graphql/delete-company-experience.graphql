@@ -1,0 +1,5 @@
+mutation DeleteCompanyExperience($deleteCompanyExperienceId: String!) {
+  deleteCompanyExperience(id: $deleteCompanyExperienceId) {
+    id
+  }
+}

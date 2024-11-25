@@ -1,11 +1,13 @@
 'use client';
 
 import Button from '@/components/Forms/Button';
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 
 interface SectionHeadingProps {
   title: string;
   description?: string;
+  renderDivider?: boolean;
   primaryButton?: {
     label?: string;
     onClick?: () => void;
@@ -17,15 +19,20 @@ interface SectionHeadingProps {
     component?: ReactNode;
   };
 }
-
 export default function SectionHeading({
   title,
   description,
   primaryButton,
   secondaryButton,
+  renderDivider = true,
 }: SectionHeadingProps) {
   return (
-    <div className="border-b border-gray-200 pb-6 sm:flex sm:items-center sm:justify-between">
+    <div
+      className={clsx(
+        'sm:flex sm:items-center sm:justify-between',
+        renderDivider && 'border-b border-gray-200 pb-6',
+      )}
+    >
       <div>
         <h2 className="text-xl font-semibold leading-6 text-gray-900">
           {title}

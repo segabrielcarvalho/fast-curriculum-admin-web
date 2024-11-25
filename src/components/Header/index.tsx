@@ -2,10 +2,13 @@
 import { useAuthContext } from '@/contexts/Auth/AuthContext';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
+  ArrowUturnLeftIcon,
   Bars3Icon,
   BellIcon,
   ChevronDownIcon,
 } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
+import Button from '../Forms/Button';
 
 type NavigationItem = {
   name: string;
@@ -14,6 +17,7 @@ type NavigationItem = {
 };
 
 const Header = ({ onOpen }: { onOpen: () => void }) => {
+  const router = useRouter();
   const { signOut, user } = useAuthContext();
   const userNavigation: NavigationItem[] = [
     { name: 'Seu Perfil', href: '#' },
@@ -27,9 +31,17 @@ const Header = ({ onOpen }: { onOpen: () => void }) => {
         onClick={onOpen}
         className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
       >
-        <span className="sr-only">Open sidebar</span>
+        <span className="sr-only">Abrir sidebar</span>
         <Bars3Icon aria-hidden="true" className="h-6 w-6" />
       </button>
+
+      <Button variant="outline">
+        <ArrowUturnLeftIcon
+          onClick={() => router.back()}
+          aria-hidden="true"
+          className="h-5 w-4 text-gray-400"
+        />
+      </Button>
 
       <div aria-hidden="true" className="h-6 w-px bg-gray-200 lg:hidden" />
 
@@ -39,7 +51,7 @@ const Header = ({ onOpen }: { onOpen: () => void }) => {
             type="button"
             className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
           >
-            <span className="sr-only">View notifications</span>
+            <span className="sr-only">Ver notifications</span>
             <BellIcon aria-hidden="true" className="h-6 w-6" />
           </button>
 

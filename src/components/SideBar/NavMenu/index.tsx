@@ -1,11 +1,18 @@
+'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useAuthContext } from '../../../contexts/Auth/AuthContext';
 import classNames from '../../../utils/classNames';
 import { Can } from '../../Can';
-import { navigation } from '../constants';
+import { getNavigation } from '../constants';
 
 export function NavMenu({ isHovered }: { isHovered: boolean }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const userId = searchParams.get('userId');
+  const { user } = useAuthContext();
+  const query = { userId: user?.id || userId };
+  const navigation = getNavigation(query);
 
   return (
     <ul role="list" className="-mx-2 space-y-3">

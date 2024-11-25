@@ -6,6 +6,7 @@ const baseStyles = {
     'group inline-flex items-center justify-center rounded-md py-2 px-4 text-sm font-normal focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2',
   outline:
     'group inline-flex ring-1 items-center justify-center rounded-md py-2 px-4 text-sm focus:outline-none',
+  unstyled: 'inline-flex items-center text-sm font-semibold',
 };
 
 const variantStyles = {
@@ -16,7 +17,7 @@ const variantStyles = {
     white:
       'bg-white text-slate-900 hover:bg-blue-50 active:bg-blue-200 active:text-slate-600 focus-visible:outline-white text-[0.84rem]',
     primary:
-      'bg-neutral-base-black ring-primary-default text-white hover:bg-primary-700 active:bg-primary-800 focus-visible:outline-primary-default text-[0.84rem]',
+      'bg-neutral-base-black ring-primary-default text-white hover:bg-neutral-700 active:bg-neutral-800 focus-visible:outline-primary-default text-[0.84rem]',
     secondary:
       'bg-secondary-default text-black hover:bg-secondary-700 active:bg-secondary-800 focus-visible:outline-secondary-default text-[0.84rem]',
     error:
@@ -28,17 +29,25 @@ const variantStyles = {
     white:
       'text-[0.84rem] ring-slate-700 text-white hover:ring-slate-500 active:ring-slate-700 active:text-slate-400 focus-visible:outline-white',
     primary:
-      'text-[0.84rem] ring-primary-default text-primary-default hover:ring-primary-700 hover:bg-gray-100 active:ring-primary-800 focus-visible:outline-primary-default',
+      'text-[0.84rem] ring-primary-default text-primary-default hover:ring-primary-700 hover:bg-primary-100 active:ring-primary-800 active:bg-primary-200 focus-visible:outline-primary-default',
     secondary:
       'text-[0.84rem] ring-secondary-default text-secondary-default hover:ring-secondary-700 active:ring-secondary-800 focus-visible:outline-secondary-default',
     error:
       'text-[0.84rem] ring-red-600 text-red-600 hover:ring-red-500 active:ring-red-700 focus-visible:outline-red-600',
   },
+  unstyled: {
+    slate: 'text-slate-900 hover:text-slate-700',
+    blue: 'text-blue-600 hover:text-blue-500',
+    white: 'text-white hover:text-gray-300',
+    primary: 'text-primary-default hover:text-primary-700',
+    secondary: 'text-secondary-default hover:text-secondary-700',
+    error: 'text-error-default hover:text-error-700',
+  },
 };
 
 type ButtonProps = (
   | {
-      variant?: 'solid';
+      variant?: 'solid' | 'unstyled';
       color?: keyof typeof variantStyles.solid;
     }
   | {
@@ -74,7 +83,9 @@ export default function Button({
       ? variantStyles.outline[props.color]
       : props.variant === 'solid'
         ? variantStyles.solid[props.color]
-        : undefined,
+        : props.variant === 'unstyled'
+          ? variantStyles.unstyled[props.color]
+          : undefined,
     className,
     disabled && 'opacity-75 cursor-not-allowed',
   );

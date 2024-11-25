@@ -7,18 +7,22 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/react';
+import clsx from 'clsx';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 
 interface ModalProps {
   title?: string;
   customFooter?: ReactNode;
-  image?: string;
+  image?: ReactNode;
   children: ReactNode;
   onOk?: () => void;
   onClose?: () => void;
   isOpen: boolean;
   showCloseButton?: boolean;
+  imageColor?: 'success' | 'error' | 'warning' | 'info';
+  description?: string;
   buttonsLabel?: {
     cancel: string;
     confirm: string;
@@ -37,6 +41,7 @@ interface ModalProps {
     | '6xl'
     | '7xl'
     | 'full';
+  position?: 'center' | 'top' | 'bottom' | 'left' | 'right';
 }
 
 const sizeClasses: Record<string, string> = {
@@ -54,6 +59,14 @@ const sizeClasses: Record<string, string> = {
   full: 'sm:max-w-full sm:min-w-full',
 };
 
+const positionClasses: Record<string, string> = {
+  center: 'items-center justify-center',
+  top: 'items-start justify-center',
+  bottom: 'items-end justify-center',
+  left: 'items-center justify-start',
+  right: 'items-center justify-end',
+};
+
 const Modal = ({
   title = 'Informação',
   customFooter,
@@ -64,11 +77,15 @@ const Modal = ({
   isOpen,
   size = 'md',
   buttonsLabel,
+  imageColor = 'info',
+  description,
   closeOnOverlayClick = true,
+  position = 'center',
 }: ModalProps) => {
   const handleClose = () => {
     if (closeOnOverlayClick && onClose) onClose();
   };
+
   return (
     <Dialog
       open={isOpen}
@@ -77,69 +94,98 @@ const Modal = ({
     >
       <DialogBackdrop className="fixed inset-0 bg-neutral-base-black bg-opacity-30 transition-opacity" />
 
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <DialogPanel
-          className={`relative max-h-full w-full transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 ${sizeClasses[size]}`}
+      <div
+        className={clsx(
+          'fixed inset-0 z-50 flex p-4',
+          positionClasses[position],
+        )}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
         >
-          <div className="flex flex-col h-full">
-            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-              <div className="sm:flex sm:items-start">
-                {image && (
-                  <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <Image
-                      src={image}
-                      alt="Imagem descritiva sobre o modal"
-                      className="h-6 w-6 text-red-600"
-                      width={48}
-                      height={48}
-                    />
-                  </div>
-                )}
-                <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                  <DialogTitle
-                    as="h3"
-                    className="font-semibold text-2xl leading-6 text-gray-900 "
-                  >
-                    {title}
-                  </DialogTitle>
-                  <div
-                    className="mt-8 h-auto overflow-y-auto scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-400 scrollbar-track-gray-200"
-                    style={{ maxHeight: 'calc(100vh - 200px)' }}
-                  >
-                    {children}
+          <DialogPanel
+            className={`relative max-h-full w-full transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 ${sizeClasses[size]}`}
+          >
+            <div className="flex flex-col h-full">
+              <div className="bg-white px-6 py-5 border-b border-gray-200">
+                <div className="flex items-center space-x-4">
+                  {image && (
+                    <div
+                      className={clsx(
+                        'mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10',
+                        imageColor === 'success' && 'bg-green-100',
+                        imageColor === 'error' && 'bg-red-100',
+                        imageColor === 'warning' && 'bg-yellow-100',
+                        imageColor === 'info' && 'bg-blue-100',
+                      )}
+                    >
+                      {typeof image === 'string' ? (
+                        <Image
+                          src={image}
+                          alt="Imagem descritiva sobre o modal"
+                          className="h-6 w-6"
+                          width={48}
+                          height={48}
+                        />
+                      ) : (
+                        image
+                      )}
+                    </div>
+                  )}
+
+                  <div className="flex-grow mx-auto flex flex-col space-y-1">
+                    <DialogTitle
+                      as="h3"
+                      className="text-lg font-semibold leading-6 text-gray-900"
+                    >
+                      {title}
+                    </DialogTitle>
+
+                    {description && (
+                      <p className="text-sm text-gray-500">{description}</p>
+                    )}
                   </div>
                 </div>
               </div>
+
+              <div
+                className="flex-grow overflow-y-auto px-6 py-4"
+                style={{ maxHeight: 'calc(100vh - 250px)' }}
+              >
+                {children}
+              </div>
+
+              <div className="bg-gray-50 px-6 py-3 flex justify-end space-x-3">
+                {customFooter ? (
+                  customFooter
+                ) : (
+                  <>
+                    <Button
+                      className="rounded-md"
+                      type="button"
+                      variant="outline"
+                      color="primary"
+                      onClick={onClose}
+                    >
+                      {buttonsLabel?.cancel || 'Cancelar'}
+                    </Button>
+                    <Button
+                      className="rounded-md px-5"
+                      type="button"
+                      variant="solid"
+                      onClick={onOk || onClose}
+                    >
+                      {buttonsLabel?.confirm || 'Confirmar'}
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
-            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-              {customFooter ? (
-                customFooter
-              ) : (
-                <div
-                  className={`flex justify-center space-x-3 sm:justify-end ${onOk ? 'sm:space-x-3' : ''}`}
-                >
-                  <Button
-                    className="rounded-md"
-                    type="button"
-                    variant="outline"
-                    color="primary"
-                    onClick={onClose}
-                  >
-                    {buttonsLabel?.cancel || 'Cancelar'}
-                  </Button>
-                  <Button
-                    className="rounded-md px-3"
-                    type="button"
-                    variant="solid"
-                    onClick={onOk || onClose}
-                  >
-                    {buttonsLabel?.confirm || 'Confirmar'}
-                  </Button>
-                </div>
-              )}
-            </div>
-          </div>
-        </DialogPanel>
+          </DialogPanel>
+        </motion.div>
       </div>
     </Dialog>
   );

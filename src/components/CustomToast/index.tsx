@@ -25,7 +25,7 @@ const CustomToast: React.FC<CustomToastProps> = ({
   onClose,
 }) => {
   return (
-    <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white">
+    <div className="pointer-events-auto w-full flex-1 max-w-xl overflow-hidden rounded-lg bg-white">
       <div className="p-4">
         <div className="flex items-center">
           <div className="flex-shrink-0">{iconMap[type]}</div>

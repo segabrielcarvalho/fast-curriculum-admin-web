@@ -1,11 +1,13 @@
 import Divider from '@/components/Divider';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
 
 type Column<T> = {
   render: (data: T) => JSX.Element;
   header: string;
   alwaysVisible?: boolean;
   width?: string;
+  justify?: 'start' | 'center' | 'end';
 };
 
 interface DynamicTableProps<T> {
@@ -34,7 +36,12 @@ const Table = <T,>({
               flex: column.width ? `0 0 ${column.width}` : '1 1 0%',
             }}
           >
-            <span className="font-medium text-start w-full text-primary-default">
+            <span
+              className={clsx(
+                'font-medium  w-full text-primary-default',
+                `text-${column.justify || 'start'}`,
+              )}
+            >
               {column.header}
             </span>
           </div>
@@ -57,7 +64,7 @@ const Table = <T,>({
                   flex: column.width ? `0 0 ${column.width}` : '1 1 0%',
                 }}
               >
-                <div className="w-full text-start">{column.render(row)}</div>
+                <div className="w-full">{column.render(row)}</div>
               </div>
             ))}
             <ChevronRightIcon

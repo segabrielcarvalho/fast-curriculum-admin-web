@@ -1,0 +1,8 @@
+mutation UpdateContactInfo(
+  $data: UpdateContactInfoInput!
+  $where: DefaultWhereInput!
+) {
+  updateContactInfo(data: $data, where: $where) {
+    id
+  }
+}

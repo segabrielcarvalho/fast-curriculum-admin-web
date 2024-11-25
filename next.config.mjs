@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+    ];
+  },
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
@@ -7,7 +15,13 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'tailwindui.com',
         port: '',
-        pathname: '/img/**',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'amdsaude.com.br',
+        port: '',
+        pathname: '/**',
       },
       {
         protocol: 'https',

@@ -1,8 +1,7 @@
 'use client';
-import images from '@/assets';
-import Image from 'next/image';
 import { useState } from 'react';
 import { Logo } from '../Logo';
+import { Mark } from '../Mark';
 import { MobileSideBar } from './MobileSideBar';
 import { NavMenu } from './NavMenu';
 
@@ -29,14 +28,11 @@ function Sidebar({
         <div className="flex grow flex-col gap-y-5 overflow-hidden border-r border-gray-200 px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center justify-center">
             {isHovered ? (
-              <Logo className="h-9 mt-4 mx-auto w-auto" />
+              <div className="flex items-center justify-center w-full h-full mt-6">
+                <Logo className="h-10 w-auto" />
+              </div>
             ) : (
-              <Image
-                src={images.logos.mark.src}
-                alt="Logo"
-                width={120}
-                height={120}
-              />
+              <Mark className="h-12 w-auto" />
             )}
           </div>
           <nav className="flex flex-1 flex-col">

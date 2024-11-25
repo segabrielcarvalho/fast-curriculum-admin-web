@@ -1,0 +1,38 @@
+query GetProfessionalInfoByUserId($userId: String!) {
+  getProfessionalInfoByUserId(userId: $userId) {
+    id
+    ContactInfo {
+      id
+      address
+      city
+      country
+      github
+      linkedin
+      phone
+      state
+      website
+      zipCode
+    }
+    Companies {
+      id
+      name
+      role
+      startAt
+      endAt
+      type
+      description
+    }
+    Educations {
+      id
+      institution
+      startAt
+      studyArea
+      endAt
+      degree
+    }
+    Skills {
+      id
+      name
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation CreateEducation($data: CreateEducationInput!) {
+  createEducation(data: $data) {
+    id
+  }
+}

@@ -1,0 +1,5 @@
+mutation CreateCompanyExperience($data: CreateCompanyExperienceInput!) {
+  createCompanyExperience(data: $data) {
+    id
+  }
+}
